@@ -8,7 +8,7 @@ const getCategories = () => {
 };
 
 const saveCategory = async (category) => {
-  const { body } = await getCategories();
+  const { categories } = await getCategories();
   try {
     axios.put('https://api.jsonbin.io/b/6041088b0866664b1088ad64', {
       headers: {
@@ -17,7 +17,7 @@ const saveCategory = async (category) => {
       },
       body: {
         categories: [
-          ...body.categories,
+          ...categories,
           {
             id: uuid(),
             ...category,

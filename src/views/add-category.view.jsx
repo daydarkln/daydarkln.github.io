@@ -31,7 +31,7 @@ const AddCategoryView = () => {
 
   const saveCategory = async () => {
     try {
-      await api.saveCategory({ category, locations });
+      await api.saveCategory({ name: category.name, locations });
       message.success('Категория успешно добавлена');
     } catch (e) {
       console.error('Error is', e);
