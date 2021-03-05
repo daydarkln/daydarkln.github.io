@@ -29,6 +29,7 @@ const alterIsOpened = curry((property, isOpened, id, items) =>
 
 const RoleManagingView = (props) => {
   const gameOptions = toJS(props.gameStore.options);
+  console.log(gameOptions);
   const locations = gameOptions.categories
     .map((option) => option.locations)
     .flat();

@@ -32,9 +32,9 @@ const NewGameView = (props) => {
   const handleChangeCategories = (categories) => (selected) => {
     return setGameSettings(() => ({
       ...gameSettings,
-      categories: categories.filter((category) => {
-        return selected.map(Number).includes(+category.id);
-      }),
+      categories: categories.filter((category) =>
+        selected.includes(category.id)
+      ),
     }));
   };
   const handleChange = (prop) => (value) => {
