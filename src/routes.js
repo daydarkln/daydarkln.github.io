@@ -5,6 +5,7 @@ const routes = {
   roleManaging: '/role-managing',
   game: '/game',
   addCategory: '/add-category',
+  categories: '/categories',
 };
 
 export default routes;

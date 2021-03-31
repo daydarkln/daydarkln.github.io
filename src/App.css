@@ -38,3 +38,15 @@
     transform: rotate(360deg);
   }
 }
+
+.df {
+  display: flex;
+}
+
+.aic {
+  align-items: center;
+}
+
+.jcsb {
+  justify-content: space-between;
+}

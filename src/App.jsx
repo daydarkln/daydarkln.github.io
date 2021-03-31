@@ -8,6 +8,7 @@ import routes from './routes';
 import GameView from './views/game.view';
 import GameStore from './stores/game.store';
 import AddCategoryView from './views/add-category.view';
+import { CategoriesView } from './views/categories/categories.view';
 
 const gameStore = new GameStore();
 
@@ -26,6 +27,11 @@ function App() {
                   name: 'Добавить новую категорию',
                   path: routes.addCategory,
                 },
+                {
+                  id: 4,
+                  name: 'Список категорий',
+                  path: routes.categories,
+                },
               ]}
             />
           </Route>
@@ -40,6 +46,9 @@ function App() {
           </Route>
           <Route exact path={routes.addCategory}>
             <AddCategoryView />
+          </Route>
+          <Route exact path={routes.categories}>
+            <CategoriesView />
           </Route>
         </Switch>
       </div>
