@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import PropTypes from "prop-types";
+import { Card } from "antd";
 import {
   assoc,
   curry,
@@ -13,18 +13,19 @@ import {
   propOr,
   repeat,
   when,
-} from 'ramda';
-import routes from '../routes';
-import { useHistory } from 'react-router-dom';
-import { observer } from 'mobx-react';
-import uuid from 'uuid-random';
-import { toJS } from 'mobx';
-import arrayShuffle from 'array-shuffle';
+} from "ramda";
+import routes from "../routes";
+import { useHistory } from "react-router-dom";
+import { observer } from "mobx-react";
+import uuid from "uuid-random";
+import { toJS } from "mobx";
+import arrayShuffle from "array-shuffle";
+import classNames from "classnames";
 
-const { Meta, } = Card;
+const { Meta } = Card;
 
 const alterIsOpened = curry((property, isOpened, id, items) =>
-  pipe(map(when(propEq('id', id), assoc(property, isOpened))))(items)
+  pipe(map(when(propEq("id", id), assoc(property, isOpened))))(items)
 );
 
 const RoleManagingView = (props) => {
@@ -37,22 +38,31 @@ const RoleManagingView = (props) => {
   const randomLocationIndex = Math.round(Math.random() * locations.length - 1);
 
   const location = locations[randomLocationIndex];
-
-  const [cards, setCards,] = useState(
+  const [cards, setCards] = useState(
     arrayShuffle([
       ...repeat(null, gameOptions.playersCont - gameOptions.spyesCount).map(
         () => {
           return {
             id: uuid(),
-            value: propOr('', 'name', location),
-            type: 'location',
+            value: propOr("", "name", location),
+            type: "location",
+            description: pathOr(
+              "Default description",
+              ["description", "location"],
+              gameOptions
+            ),
             isOpened: false,
           };
         }
       ),
       ...repeat(null, gameOptions.spyesCount).map(() => ({
         id: uuid(),
-        type: 'spy',
+        type: "spy",
+        description: pathOr(
+          "Default description",
+          ["description", "spy"],
+          gameOptions
+        ),
         isOpened: false,
       })),
     ])
@@ -66,12 +76,12 @@ const RoleManagingView = (props) => {
     return cards.filter((card) => card.id !== id);
   };
   const toggleOpened = (id) => {
-    if (pipe(find(propEq('id', id)), prop('isOpened'))(cards)) {
+    if (pipe(find(propEq("id", id)), prop("isOpened"))(cards)) {
       return setCards(() => removeCard(id));
     }
     return setCards(() =>
       alterIsOpened(
-        'isOpened',
+        "isOpened",
         !cards.find((card) => card.id === id).isOpened,
         id,
         cards
@@ -83,26 +93,39 @@ const RoleManagingView = (props) => {
     if (!cards.length) {
       history.push(routes.game);
     }
-  }, [cards,]);
+  }, [cards]);
+
+  const cardTheme = useCallback(
+    (isOpened) =>
+      classNames(
+        "role-managing__card",
+        isOpened ? "role-managing__card--opened" : ""
+      ),
+    []
+  );
 
   return (
     <>
-      {cards.map((card) => (
-        <Card
-          key={card.id}
-          style={{ width: 300, }}
-          onClick={() => handleClick(card.id)}
-        >
-          {card.isOpened ? (
-            <Meta
-              title={card.type === 'location' ? card.value : 'Вы шпион'}
-              description="This is the description"
-            />
-          ) : (
-            'Посмотри, что внутри'
-          )}
-        </Card>
-      ))}
+      {cards.map((card) => {
+        console.log(card);
+        return (
+          <Card
+            key={card.id}
+            onClick={() => handleClick(card.id)}
+            className={cardTheme(card.isOpened)}
+          >
+            {card.isOpened ? (
+              <Meta
+                title={card.type === "location" ? card.value : "Вы шпион"}
+                description={card.description}
+                className="role-managing__meta"
+              />
+            ) : (
+              "Посмотри, что внутри"
+            )}
+          </Card>
+        );
+      })}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from "mobx";
 
 class GameStore {
   options = {
@@ -18,7 +18,15 @@ class GameStore {
   }
 
   setGameOptions(gameOptions) {
-    this.options = gameOptions;
+    this.options = {
+      ...gameOptions,
+      description: {
+        location:
+          "Вы мирный житель. Ваша цель - вычислить шпиона и убрать его путем голосования",
+        spy:
+          "Вы шпион. Ваша цель - угадать локацию или не дать понять другим участникам, что вы ее не знаете",
+      },
+    };
   }
 }
 

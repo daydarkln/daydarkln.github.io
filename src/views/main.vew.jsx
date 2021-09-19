@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const MainView = (props) => {
   return (
-    <Menu mode="inline" theme="dark">
+    <Menu mode="inline" className="main-view">
       {props.menuItems.map((item) => (
         <Menu.Item key={item.id}>
           <Link to={item.path}>{item.name}</Link>

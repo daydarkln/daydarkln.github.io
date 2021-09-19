@@ -1,7 +1,122 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
+
+:root {
+  --primary-color: #0069cd;
+  --bg-color: #005bb2;
+  --primary-text-color: rgba(255, 255, 255, 0.8);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+span,
+h1,
+p,
+input,
+label,
+.ant-form-item .ant-form-item-label > label {
+  color: var(--primary-text-color);
+}
+
+h1 {
+  text-align-last: left;
+}
+
+.df {
+  display: flex;
+}
+
+.fdc {
+  flex-direction: column;
+}
+
+.ant-menu.main-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  border: none;
+}
+
+.ant-menu-inline.main-view .ant-menu-item {
+  width: 400px;
+}
+
+.main-view .ant-menu-item > a {
+  color: var(--primary-text-color);
+  transition: opacity 0.3s ease;
+}
+
+.main-view .ant-menu-item > a:hover {
+  opacity: 0.8;
+}
+
+.ant-form-item .ant-select.new-game__selector {
+  width: 100%;
+}
+
+.ant-form-item-control-input-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.new-game__submit {
+  width: 100%;
+}
+
+.role-managing__card.ant-card-bordered {
+  width: 300px;
+  min-height: 480px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  cursor: pointer;
+  box-shadow: 0 0px 6px 3px rgba(0, 0, 0, 0.03);
+  background: var(--bg-color);
+  border: none;
+}
+
+.ant-card-body {
+  color: var(--primary-text-color);
+}
+
+.role-managing__card--opened.ant-card-bordered {
+  background: var(--primary-color);
+}
+
+.role-managing__meta .ant-card-meta-title {
+  color: white;
+}
+
+.role-managing__meta .ant-card-meta-description {
+  color: rgba(255, 255, 255, 0.8);
+}
 
 .App {
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color);
+  padding: 40px 0;
+  color: --var(--primary-text-color);
 }
 
 .App-logo {
@@ -49,4 +164,61 @@
 
 .jcsb {
   justify-content: space-between;
+}
+
+.ant-input-number {
+  width: 100%;
+  background: var(--primary-color);
+  border: none;
+}
+
+.ant-btn > span {
+  color: var(--primary-text-color);
+}
+
+.ant-select-selector {
+  background: var(--primary-color);
+  border: none;
+}
+
+.ant-select-multiple .ant-select-selection-item {
+  background: var(--bg-color);
+  border: none;
+}
+
+.ant-select:not(.ant-select-disabled):hover .ant-select-selector,
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  border: none;
+  background: var(--primary-color);
+}
+
+.ant-select-multiple .ant-select-selection-item-remove svg {
+  fill: var(--primary-text-color);
+}
+
+.ant-btn {
+  background: var(--primary-color);
+  border: none;
+}
+
+.ant-btn[disabled],
+.ant-btn[disabled]:hover,
+.ant-btn[disabled]:focus,
+.ant-btn[disabled]:active {
+  background: none;
+  opacity: 0;
+}
+
+.ant-btn:hover,
+.ant-btn:focus,
+.ant-btn:active {
+  background: var(--bg-color);
+}
+
+.game__counter {
+  font-size: 80px;
+}
+
+.ant-btn > a:only-child {
+  color: var(--primary-text-color);
 }
