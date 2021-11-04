@@ -1,12 +1,12 @@
-import { LeftOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Button, List } from 'antd';
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { getCategories } from '../../client';
-import { Category } from '../../components/Category';
-import routes from '../../routes';
+import { LeftOutlined, LoadingOutlined } from "@ant-design/icons";
+import { Button, List } from "antd";
+import * as React from "react";
+import { Link } from "react-router-dom";
+import { getCategories } from "../../client";
+import { Category } from "../../components/Category";
+import routes from "../../routes";
 
-import './style.css';
+import "./style.css";
 
 export const CategoriesView = () => {
   const [categories, setCategories] = React.useState([]);
@@ -15,14 +15,14 @@ export const CategoriesView = () => {
     setCategories(categories);
   }, []);
   return (
-    <>
+    <div className="df fdc">
       <div className="df aic jcsb">
-        <Button type="link">
+        <Button type="link" className="btn-shadowed">
           <Link to={routes.main}>
             <LeftOutlined />
           </Link>
         </Button>
-        <h1>Список категорий</h1>
+        <h1 className="categories__heading">Список категорий</h1>
       </div>
       <List className="categories__list">
         {categories.length ? (
@@ -35,6 +35,6 @@ export const CategoriesView = () => {
           <LoadingOutlined style={{ fontSize: 24 }} spin />
         )}
       </List>
-    </>
+    </div>
   );
 };

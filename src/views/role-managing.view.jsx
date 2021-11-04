@@ -99,7 +99,8 @@ const RoleManagingView = (props) => {
     (isOpened) =>
       classNames(
         "role-managing__card",
-        isOpened ? "role-managing__card--opened" : ""
+        isOpened ? "role-managing__card--opened" : "",
+        "card"
       ),
     []
   );
