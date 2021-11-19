@@ -29,9 +29,8 @@ const GameView = (props) => {
   useEffect(() => {
     if (countdown === 0) {
       setWinnerSpy();
-      history.push(routes.winner);
     }
-  }, []);
+  }, [countdown]);
 
   const spyText =
     gameStore.spyesCount > 1 ? "Выиграли шпионы" : "Выиграл шпион";
