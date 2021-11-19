@@ -127,12 +127,12 @@ li {
 
 .main-view a {
   color: var(--primary-text-color);
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   font-size: 16px;
 }
 
 .main-view a:hover {
-  opacity: 0.8;
+  color: var(--main-color-hover-1);
 }
 
 .ant-form-item .ant-select.new-game__selector {
@@ -364,10 +364,12 @@ li {
   padding: 10px 0;
 }
 
-.winner__people .role-managing__card.ant-card-bordered {
-  background: var(--main-color-active-1);
+.winner__people .role-managing__card.ant-card-bordered h1,
+.winner__people .role-managing__card.ant-card-bordered span {
+  color: var(--main-color-1);
 }
 
-.winner__spy .role-managing__card.ant-card-bordered {
-  background: var(--main-color-active-4);
+.winner__spy .role-managing__card.ant-card-bordered h1,
+.winner__spy .role-managing__card.ant-card-bordered span {
+  color: var(--main-color-4);
 }

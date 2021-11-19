@@ -12,7 +12,9 @@ export const WinnerView = (props) => {
     <div className="role-managing__card-wrapper winner__spy">
       <Card onClick={moveToMain} className="role-managing__card">
         <h1>Выиграли шпионы</h1>
-        <p>Загаданная локация: {props.location}</p>
+        <p>
+          Загаданная локация: <span>{props.location}</span>
+        </p>
       </Card>
     </div>
   );
@@ -21,7 +23,9 @@ export const WinnerView = (props) => {
       <Card onClick={moveToMain} className="role-managing__card">
         <h1>Выиграли мирные люди</h1>
         <p>Поздравляю</p>
-        <p>Загаданная локация: {props.location}</p>
+        <p>
+          Загаданная локация: <span>{props.location}</span>
+        </p>
       </Card>
     </div>
   );
