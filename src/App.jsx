@@ -10,6 +10,7 @@ import GameStore from "./stores/game.store";
 import AddCategoryView from "./views/add-category.view";
 import { CategoriesView } from "./views/categories/categories.view";
 import { RulesView } from "./views/rules.view";
+import { WinnerView } from "./views/winner.view";
 
 const gameStore = new GameStore();
 
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route exact path={routes.categories}>
             <CategoriesView />
+          </Route>
+          <Route exact path={routes.winner}>
+            <WinnerView gameStore={gameStore} />
           </Route>
         </Switch>
       </div>

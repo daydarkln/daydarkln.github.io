@@ -6,7 +6,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import * as api from "../client";
 import { Link } from "react-router-dom";
 import routes from "../routes";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, LeftOutlined } from "@ant-design/icons";
 
 const alterValue = curry((property, value, id, items) =>
   pipe(map(when(propEq("id", id), assoc(property, value))))(items)
@@ -46,6 +46,11 @@ const AddCategoryView = () => {
   );
   return (
     <Form layout="vertical" onFinish={saveCategory}>
+      <Button type="link" className="btn-shadowed">
+        <Link to={routes.main}>
+          <LeftOutlined />
+        </Link>
+      </Button>
       <Form.Item>
         <Input
           onChange={handleChangeName}
@@ -84,11 +89,6 @@ const AddCategoryView = () => {
           disabled={isAddButtonDisabled}
         >
           Добавить категорию
-        </Button>
-      </Form.Item>
-      <Form.Item>
-        <Button type="text" className="btn-small">
-          <Link to={routes.main}>Назад</Link>
         </Button>
       </Form.Item>
     </Form>

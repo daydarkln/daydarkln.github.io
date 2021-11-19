@@ -35,16 +35,25 @@ const RoleManagingView = (props) => {
     .map((option) => option.locations)
     .flat();
 
-  const randomLocationIndex = Math.round(Math.random() * locations.length - 1);
+  const [randomLocationIndex] = useState(
+    Math.round(Math.random() * locations.length - 1)
+  );
 
-  const location = locations[randomLocationIndex];
+  const location = useMemo(
+    () => locations[randomLocationIndex],
+    [locations, randomLocationIndex]
+  );
+  useEffect(
+    () => location && props.gameStore.setLocation(location.name),
+    [location]
+  );
   const [cards, setCards] = useState(
     arrayShuffle([
       ...repeat(null, gameOptions.playersCont - gameOptions.spyesCount).map(
         () => {
           return {
             id: uuid(),
-            value: propOr("", "name", location),
+            value: propOr("-", "name", location),
             type: "location",
             description: pathOr(
               "Default description",
@@ -107,26 +116,28 @@ const RoleManagingView = (props) => {
 
   return (
     <>
-      {cards.map((card) => {
-        console.log(card);
-        return (
-          <Card
-            key={card.id}
-            onClick={() => handleClick(card.id)}
-            className={cardTheme(card.isOpened)}
-          >
-            {card.isOpened ? (
-              <Meta
-                title={card.type === "location" ? card.value : "Вы шпион"}
-                description={card.description}
-                className="role-managing__meta"
-              />
-            ) : (
-              "Посмотри, что внутри"
-            )}
-          </Card>
-        );
-      })}
+      <div className="role-managing__card-wrapper">
+        {cards.map((card, index) => {
+          return (
+            <Card
+              key={card.id}
+              onClick={() => handleClick(card.id)}
+              className={cardTheme(card.isOpened)}
+              style={{ left: 3 * index, top: 3 * index }}
+            >
+              {card.isOpened ? (
+                <Meta
+                  title={card.type === "location" ? card.value : "Вы шпион"}
+                  description={card.description}
+                  className="role-managing__meta"
+                />
+              ) : (
+                "Посмотри, что внутри"
+              )}
+            </Card>
+          );
+        })}
+      </div>
     </>
   );
 };

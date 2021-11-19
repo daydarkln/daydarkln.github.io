@@ -31,6 +31,12 @@
   );
 }
 
+#root {
+  display: flex;
+  justify-content: center;
+  background: var(--bg-color);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Lato", "Segoe UI", "Roboto",
@@ -142,6 +148,12 @@ li {
   width: 100%;
 }
 
+.role-managing__card-wrapper {
+  width: 300px;
+  min-height: 480px;
+  position: relative;
+}
+
 .role-managing__card.ant-card-bordered {
   width: 300px;
   min-height: 480px;
@@ -153,9 +165,10 @@ li {
   color: var(--primary-color);
   border-color: var(--primary-color);
   cursor: pointer;
-  transition: background box-shadow 0.3s ease;
+  transition: all 0.3s ease;
   background: var(--card-bg-active);
   border: none;
+  border-radius: 5px;
 }
 
 .ant-card-body {
@@ -180,12 +193,8 @@ li {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: var(--bg-color);
   padding: 40px 21px;
   color: --var(--primary-text-color);
-  background-image: url(./img/3Screens.svg);
-  background-repeat: no-repeat;
-  background-position: right;
 }
 
 .App-logo {
@@ -353,4 +362,12 @@ li {
   grid-gap: 5px;
   grid-template-columns: 1fr 1fr;
   padding: 10px 0;
+}
+
+.winner__people .role-managing__card.ant-card-bordered {
+  background: var(--main-color-active-1);
+}
+
+.winner__spy .role-managing__card.ant-card-bordered {
+  background: var(--main-color-active-4);
 }

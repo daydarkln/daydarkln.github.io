@@ -11,10 +11,26 @@ class GameStore {
     isRolesNeeded: false,
     categories: [],
     isHelpQuestionsNeeded: false,
+    winner: "",
   };
+
+  location = "";
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setLocation(location) {
+    console.log(location);
+    this.location = location;
+  }
+
+  setWinner(winner) {
+    console.log(winner);
+    this.options = {
+      ...this.options,
+      winner,
+    };
   }
 
   setGameOptions(gameOptions) {
@@ -23,8 +39,7 @@ class GameStore {
       description: {
         location:
           "Вы мирный житель. Ваша цель - вычислить шпиона и убрать его путем голосования",
-        spy:
-          "Вы шпион. Ваша цель - угадать локацию или не дать понять другим участникам, что вы ее не знаете",
+        spy: "Ваша цель - угадать локацию или не дать понять другим участникам, что вы ее не знаете",
       },
     };
   }

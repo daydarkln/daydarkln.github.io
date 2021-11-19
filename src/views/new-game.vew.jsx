@@ -4,8 +4,9 @@ import { Form, Button, Select, InputNumber, Switch } from "antd";
 import usePromise from "react-use-promise";
 import { getCategories } from "../client";
 import { pathOr } from "ramda";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import routes from "../routes";
+import { LeftOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -44,12 +45,18 @@ const NewGameView = (props) => {
     }));
   };
 
-  const isSubmitDisabled = useMemo(() => !gameSettings.categories.length, [
-    gameSettings.categories,
-  ]);
+  const isSubmitDisabled = useMemo(
+    () => !gameSettings.categories.length,
+    [gameSettings.categories]
+  );
 
   return (
     <div className="df fdc">
+      <Button type="link" className="btn-shadowed">
+        <Link to={routes.main}>
+          <LeftOutlined />
+        </Link>
+      </Button>
       <h1>Новая игра</h1>
       <Form layout="horizontal" onFinish={setGame(gameSettings)}>
         <Form.Item label="Игроков">

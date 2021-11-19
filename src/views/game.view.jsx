@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import { Button } from "antd";
-import { addMinutes, format, startOfHour, startOfMinute } from "date-fns";
 import { useCountdownTimer } from "use-countdown-timer";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import routes from "../routes";
 import { PropTypes } from "mobx-react";
 import { toJS } from "mobx";
@@ -17,6 +16,23 @@ const GameView = (props) => {
   const { countdown, start, pause, isRunning, onExpire } = useCountdownTimer({
     timer: 1000 * 60 * toJS(gameStore.timer),
   });
+  const history = useHistory();
+  const setWinnerSpy = useCallback(() => {
+    props.gameStore.setWinner("spy");
+    history.push(routes.winner);
+  }, []);
+  const setWinnerPeople = useCallback(() => {
+    props.gameStore.setWinner("people");
+    history.push(routes.winner);
+  }, []);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      setWinnerSpy();
+      history.push(routes.winner);
+    }
+  }, []);
+
   const spyText =
     gameStore.spyesCount > 1 ? "Выиграли шпионы" : "Выиграл шпион";
   return (
@@ -51,8 +67,12 @@ const GameView = (props) => {
         </div>
       </div>
       <div className="game__result">
-        <Button className="btn-error btn-small">{spyText}</Button>
-        <Button className="btn-small">Выиграли мирные</Button>
+        <Button className="btn-error btn-small" onClick={setWinnerSpy}>
+          {spyText}
+        </Button>
+        <Button className="btn-small" onClick={setWinnerPeople}>
+          Выиграли мирные
+        </Button>
       </div>
     </div>
   );
