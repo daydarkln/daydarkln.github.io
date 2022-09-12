@@ -3,14 +3,14 @@ import uuid from 'uuid-random';
 
 const getCategories = () => {
   return axios
-    .get('https://api.jsonbin.io/b/6041088b0866664b1088ad64/latest')
+    .get('https://api.jsonbin.io/v3/b/631f1e945c146d63ca98ad76')
     .then(({ data }) => data.body);
 };
 
 const saveCategory = async (category) => {
   const { categories } = await getCategories();
   try {
-    axios.put('https://api.jsonbin.io/b/6041088b0866664b1088ad64', {
+    axios.put('https://api.jsonbin.io/v3/b/631f1e945c146d63ca98ad76', {
       headers: {
         'Content-Type': 'application/json',
         'X-Bin-Versioning': false,
