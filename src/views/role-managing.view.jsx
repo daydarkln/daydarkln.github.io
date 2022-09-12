@@ -28,28 +28,17 @@ const alterIsOpened = curry((property, isOpened, id, items) =>
   pipe(map(when(propEq("id", id), assoc(property, isOpened))))(items)
 );
 
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 const RoleManagingView = (props) => {
   const gameOptions = toJS(props.gameStore.options);
   console.log(gameOptions);
-  const locations = gameOptions.categories
-    .map((option) => option.locations)
-    .flat();
+  const location = toJS(props.gameStore.location.locations)[randomIntFromInterval(0,props.gameStore.location.locations.length - 1)]
 
-  const [randomLocationIndex] = useState(
-    Math.round(Math.random() * locations.at(-1))
-  );
+  console.log('location', location);
 
-  const location = useMemo(
-    () => locations[randomLocationIndex],
-    [locations, randomLocationIndex]
-  );
-  useEffect(
-    () => {
-      console.log(randomLocationIndex);
-      return location && props.gameStore.setLocation(location.name);
-    },
-    [location]
-  );
   const [cards, setCards] = useState(
     arrayShuffle([
       ...repeat(null, gameOptions.playersCont - gameOptions.spyesCount).map(

@@ -22,12 +22,17 @@ const defaultSettings = {
   isHelpQuestionsNeeded: false,
 };
 
+function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 const NewGameView = (props) => {
   const [result] = usePromise(getCategories, []);
   const [gameSettings, setGameSettings] = useState(defaultSettings);
   const history = useHistory();
   const setGame = (gameSetting) => () => {
     props.gameStore.setGameOptions(gameSetting);
+    props.gameStore.setLocation(gameSetting.categories.at(randomIntFromInterval(0, gameSetting.categories.length - 1)))
     history.push(routes.roleManaging);
   };
   const handleChangeCategories = (categories) => (selected) => {
