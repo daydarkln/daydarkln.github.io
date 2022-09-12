@@ -34,7 +34,7 @@ const NewGameView = (props) => {
     return setGameSettings(() => ({
       ...gameSettings,
       categories: categories.filter((category) =>
-        selected.includes(category.id)
+        selected.includes(String(category.id))
       ),
     }));
   };

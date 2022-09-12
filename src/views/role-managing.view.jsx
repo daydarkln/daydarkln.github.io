@@ -36,7 +36,7 @@ const RoleManagingView = (props) => {
     .flat();
 
   const [randomLocationIndex] = useState(
-    Math.round(Math.random() * locations.length - 1)
+    Math.round(Math.random() * locations.at(-1))
   );
 
   const location = useMemo(
@@ -44,7 +44,10 @@ const RoleManagingView = (props) => {
     [locations, randomLocationIndex]
   );
   useEffect(
-    () => location && props.gameStore.setLocation(location.name),
+    () => {
+      console.log(randomLocationIndex);
+      return location && props.gameStore.setLocation(location.name);
+    },
     [location]
   );
   const [cards, setCards] = useState(
