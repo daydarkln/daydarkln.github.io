@@ -13,11 +13,14 @@ export const CategoriesView = () => {
   React.useEffect(async () => {
     const { categories } = await getCategories();
     setCategories(categories);
-  }, []);
+  }, []); 
+  //отказаться от useEffect, заменив на хук useGetCategories
   return (
+    //убрать лишние classNames и, при необходимости, подключить tailwind
     <div className="df fdc">
       <div className="df aic jcsb">
         <Button type="link" className="btn-shadowed">
+    //сделать отдельный компонент Link и сделать в нем различные случаи: кнопка назад, текст, jsx element или children
           <Link to={routes.main}>
             <LeftOutlined />
           </Link>
@@ -32,7 +35,7 @@ export const CategoriesView = () => {
             </List.Item>
           ))
         ) : (
-          <LoadingOutlined style={{ fontSize: 24 }} spin />
+          <LoadingOutlined style={{ fontSize: 24 }} spin /> //сделать кастомный loader чтобы отказаться от библиотеки ради производительности
         )}
       </List>
     </div>
