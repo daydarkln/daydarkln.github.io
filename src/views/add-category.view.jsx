@@ -12,7 +12,7 @@ import { PlusOutlined, LeftOutlined } from "@ant-design/icons";
 const alterValue = curry((property, value, id, items) =>
   pipe(map(when(propEq("id", id), assoc(property, value))))(items)
 );
-//Убрать окончание View
+//Убрать окончание View, перенести в src/pages
 const AddCategoryView = () => {
   const [locations, setLocations] = useState([{ id: uuid(), name: "" }]);
   const [category, setCategory] = useState({ name: "" });
@@ -35,7 +35,8 @@ const AddCategoryView = () => {
   const removeLocation = (id) => () =>
     setLocations(locations.filter((location) => location.id !== id));//можно сделать с prev state
 
-  //Сделать useCallback
+  // Сделать useCallback
+  // сделать хук-мутацию на изменение категории 
   const saveCategory = async () => {
     try {
       await api.saveCategory({ name: category.name, locations });
@@ -65,11 +66,11 @@ const AddCategoryView = () => {
         />
       </Form.Item>
       <Form.Item label="Локации" className="df fdc">
-        // Переделать в новый компонент List
+        // Переделать в новый компонент Locations
         {locations.map(({ id, name }) => (
-          <div className="df" key={id} style={{ paddingBottom: 3 }}>
+          <div className="df" key={id} style={{ paddingBottom: 3 }}> //откзаться от inline styles
             <Input onChange={handleChangeLocationName(id)} value={name} />
-            {locations.length > 1 && (
+            {locations.length > 1 && ( // использовать проверку из Ramda
               <Button
                 size="small"
                 onClick={removeLocation(id)}
@@ -84,7 +85,7 @@ const AddCategoryView = () => {
           type="link"
           onClick={addLocation}
           className="btn-xsmall"
-          style={{ margin: "0 auto" }}
+          style={{ margin: "0 auto" }} //откзаться от inline styles
         >
           <PlusOutlined />
         </Button>
