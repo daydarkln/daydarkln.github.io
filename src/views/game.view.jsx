@@ -11,19 +11,20 @@ import {
   CloseOutlined,
 } from "@ant-design/icons";
 
+//Описать props(TS)
 const GameView = (props) => {
-  const gameStore = props.gameStore.options;
+  const gameStore = props.gameStore.options; //сделать деструктуризацию
   const { countdown, start, pause, isRunning, onExpire } = useCountdownTimer({
     timer: 1000 * 60 * toJS(gameStore.timer),
   });
-  const history = useHistory();
-  const setWinnerSpy = useCallback(() => {
+  const history = useHistory(); // достать только push
+  const setWinnerSpy = useCallback(() => {// отделить функцию
     props.gameStore.setWinner("spy");
-    history.push(routes.winner);
+    history.push(routes.winner); // вынести в функцию и использовать функцию toWinnerPage
   }, []);
-  const setWinnerPeople = useCallback(() => {
+  const setWinnerPeople = useCallback(() => {// отделить функцию
     props.gameStore.setWinner("people");
-    history.push(routes.winner);
+    history.push(routes.winner); // вынести в функцию и использовать функцию toWinnerPage
   }, []);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const GameView = (props) => {
   }, [countdown]);
 
   const spyText =
-    gameStore.spyesCount > 1 ? "Выиграли шпионы" : "Выиграл шпион";
+    gameStore.spyesCount > 1 ? "Выиграли шпионы" : "Выиграл шпион"; // отделить от return, добавить useMemo, использовать ramda для проверки
   return (
     <div className="df fdc">
       <span className="game__counter">
@@ -43,10 +44,11 @@ const GameView = (props) => {
         :{" "}
         {Math.floor((countdown % 6e4) / 1000)
           .toString()
-          .padStart(2, "0")}
+          .padStart(2, "0")} //Вынести все вычисления в переменную с useMemo
       </span>
       <div className="game__controls">
         <div>
+          //вынести в отдельную функцию renderResumeBtn с useCallback
           {isRunning ? (
             <Button onClick={pause} className="btn-shadowed btn-small">
               <PauseOutlined />
@@ -65,6 +67,7 @@ const GameView = (props) => {
           </Button>
         </div>
       </div>
+      //если использовать классы, а не tailwind, то необходимо придерживаться методологии БЭМ( btn btn-small btn-error )
       <div className="game__result">
         <Button className="btn-error btn-small" onClick={setWinnerSpy}>
           {spyText}
