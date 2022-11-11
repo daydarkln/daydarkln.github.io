@@ -30,7 +30,7 @@ function randomIntFromInterval(min, max) { // min and max included
 // Вынести в src/pages, описать props
 const NewGameView = (props) => {
   // деструктуризация props
-  // сделать структуру - блок useState, блок хуков, функции
+  // сделать структуру - блок useState, блок хуков, функции и между ними отступы
   const [result] = usePromise(getCategories, []); // отказаться от promise и через useGetCategories получать данные, получать loading и все такое
   const [gameSettings, setGameSettings] = useState(defaultSettings);
   const history = useHistory(); //  получать только push
