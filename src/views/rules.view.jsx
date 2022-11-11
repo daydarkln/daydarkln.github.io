@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import routes from "../routes";
 import { LeftOutlined } from "@ant-design/icons";
 
-const addAchieve = (obj) => obj;
+const addAchieve = (obj) => obj; // убрать
 
+//  RulesView => Rules и перенести в src/pages
+//  сделать правильную вложенность текста h1->h2->p || h3->p
 export const RulesView = () => (
   <div>
+    // Использовать компонент Link
     <Button type="link" className="btn-shadowed">
       <Link to={routes.main}>
         <LeftOutlined />
@@ -87,7 +90,7 @@ export const RulesView = () => (
             name: "Внимательность",
             description:
               "Молодец! Ты ознакамливаешься с правилами, а не рпосто тыкаешь на кнопки",
-          })}
+          })} // сделать функцию handleClickAchieve с useCallback
         >
           сюда
         </Button>
