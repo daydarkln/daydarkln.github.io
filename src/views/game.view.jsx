@@ -13,22 +13,22 @@ import {
 
 //Описать props(TS)
 const GameView = (props) => {
-  const gameStore = props.gameStore.options; //сделать деструктуризацию
+  const gameStore = props.gameStore.options; //сделать деструктуризацию, добавить отступ
   const { countdown, start, pause, isRunning, onExpire } = useCountdownTimer({
     timer: 1000 * 60 * toJS(gameStore.timer),
-  });
-  const history = useHistory(); // достать только push
-  const setWinnerSpy = useCallback(() => {// отделить функцию
+  });// добавить отступ
+  const history = useHistory(); // достать только push, добавить отступ
+  const setWinnerSpy = useCallback(() => {// добавить отступ
     props.gameStore.setWinner("spy");
     history.push(routes.winner); // вынести в функцию и использовать функцию toWinnerPage
   }, []);
-  const setWinnerPeople = useCallback(() => {// отделить функцию
+  const setWinnerPeople = useCallback(() => {// добавить отступ
     props.gameStore.setWinner("people");
     history.push(routes.winner); // вынести в функцию и использовать функцию toWinnerPage
   }, []);
 
   useEffect(() => {
-    if (countdown === 0) {
+    if (countdown === 0) { // сделать проверку из Ramda
       setWinnerSpy();
     }
   }, [countdown]);
