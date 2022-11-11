@@ -7,7 +7,8 @@ export const Category = (props) => {
   const { locations, name, } = props;
   return (
     <div className="category">
-      <List header={<Divider>{name}</Divider>}>
+      <List header={<Divider>{name}</Divider>}> {/* Создать компонент List, куда будет передаваться data 
+      в определенном формате и по ней будут проходится и выводить список элементов, также определить headerSection и footerSection*/}
         {locations.map((place) => (
           <List.Item key={place.id}>
             <Paragraph editable={{ onChange: console.log, }}>

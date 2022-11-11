@@ -22,30 +22,34 @@ const defaultSettings = {
   isHelpQuestionsNeeded: false,
 };
 
+// вынести в utils
 function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+// Вынести в src/pages, описать props
 const NewGameView = (props) => {
-  const [result] = usePromise(getCategories, []);
+  // деструктуризация props
+  // сделать структуру - блок useState, блок хуков, функции и между ними отступы
+  const [result] = usePromise(getCategories, []); // отказаться от promise и через useGetCategories получать данные, получать loading и все такое
   const [gameSettings, setGameSettings] = useState(defaultSettings);
-  const history = useHistory();
-  const setGame = (gameSetting) => () => {
+  const history = useHistory(); //  получать только push
+  const setGame = (gameSetting) => () => {// useCallback
     props.gameStore.setGameOptions(gameSetting);
     props.gameStore.setLocation(gameSetting.categories.at(randomIntFromInterval(0, gameSetting.categories.length - 1)))
     history.push(routes.roleManaging);
   };
-  const handleChangeCategories = (categories) => (selected) => {
-    return setGameSettings(() => ({
+  const handleChangeCategories = (categories) => (selected) => { // непонятно зачем { } и return, использовать prevState и useCallback
+    return setGameSettings(() => ({ 
       ...gameSettings,
       categories: categories.filter((category) =>
-        selected.includes(String(category.id))
+        selected.includes(String(category.id)) // использовать ramda includes
       ),
     }));
   };
-  const handleChange = (prop) => (value) => {
+  const handleChange = (prop) => (value) => { // useCallback
     setGameSettings(() => ({
-      ...gameSettings,
+      ...gameSettings,//использовать prevState
       [prop]: value,
     }));
   };
@@ -53,7 +57,7 @@ const NewGameView = (props) => {
   const isSubmitDisabled = useMemo(
     () => !gameSettings.categories.length,
     [gameSettings.categories]
-  );
+  ); // слишком маленькое условия, не обязательно создавать новую переменную
 
   return (
     <div className="df fdc">
@@ -63,6 +67,7 @@ const NewGameView = (props) => {
         </Link>
       </Button>
       <h1>Новая игра</h1>
+      //  Вынести форму в отдельный компонент в src/page/NewGame/components
       <Form layout="horizontal" onFinish={setGame(gameSettings)}>
         <Form.Item label="Игроков">
           <InputNumber
@@ -114,6 +119,7 @@ const NewGameView = (props) => {
             )}
             className="new-game__selector"
           >
+              //вынести в renderOptions и использовать List
             {pathOr([], ["categories"], result).map((category) => (
               <Option key={category.id}>{category.name}</Option>
             ))}
