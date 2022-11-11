@@ -125,7 +125,7 @@ const RoleManagingView = (props) => {
               key={card.id}
               onClick={() => handleClick(card.id)} // переделать handleСlick и избавиться от стр функц
               className={cardTheme(card.isOpened)}
-              style={{ left: 3 * index, top: 3 * index }}
+              style={{ left: 3 * index, top: 3 * index }} // убрать inline стили
             >
               {card.isOpened ? (
                 <Meta
