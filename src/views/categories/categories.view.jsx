@@ -9,7 +9,7 @@ import routes from "../../routes";
 import "./style.css";
 
 export const CategoriesView = () => {
-  const [categories, setCategories] = React.useState([]);
+  const [categories, setCategories] = React.useState([]); // отступы
   React.useEffect(async () => {
     const { categories } = await getCategories();
     setCategories(categories);
@@ -28,13 +28,15 @@ export const CategoriesView = () => {
         <h1 className="categories__heading">Список категорий</h1>
       </div>
       <List className="categories__list">
-        {categories.length ? (
+        {categories.length ? ( // убрать
+         //Категории перенести в комп List
           categories.map((category) => (
             <List.Item key={category.id}>
               <Category {...category} />
             </List.Item>
           ))
         ) : (
+          // вынести в начало страницы if ( categories.length ) {
           <LoadingOutlined style={{ fontSize: 24 }} spin /> //сделать кастомный loader чтобы отказаться от библиотеки ради производительности
         )}
       </List>
