@@ -8,28 +8,34 @@ import { Link } from "react-router-dom";
 import routes from "../routes";
 import { PlusOutlined, LeftOutlined } from "@ant-design/icons";
 
+//Написать комментарий работы функции, вынести в src/utils
 const alterValue = curry((property, value, id, items) =>
   pipe(map(when(propEq("id", id), assoc(property, value))))(items)
 );
-
+//Убрать окончание View
 const AddCategoryView = () => {
   const [locations, setLocations] = useState([{ id: uuid(), name: "" }]);
   const [category, setCategory] = useState({ name: "" });
 
+  //Сделать useCallback
   const addLocation = () =>
     setLocations([...locations, { id: uuid(), name: "" }]);
 
+  //Сделать useCallback
   const handleChangeName = (event) =>
     setCategory({
       name: event.target.value,
     });
+  //Сделать useCallback
   const handleChangeLocationName = (id) => (event) => {
     setLocations(alterValue("name", event.target.value, id, locations));
   };
 
+  //Сделать useCallback
   const removeLocation = (id) => () =>
-    setLocations(locations.filter((location) => location.id !== id));
+    setLocations(locations.filter((location) => location.id !== id));//можно сделать с prev state
 
+  //Сделать useCallback
   const saveCategory = async () => {
     try {
       await api.saveCategory({ name: category.name, locations });
@@ -42,7 +48,7 @@ const AddCategoryView = () => {
 
   const isAddButtonDisabled = useMemo(
     () => !category.name || !locations.find((location) => location.name),
-    [name, locations]
+    [name, locations] // name? тут по идее должно быть category и locations
   );
   return (
     <Form layout="vertical" onFinish={saveCategory}>
@@ -59,6 +65,7 @@ const AddCategoryView = () => {
         />
       </Form.Item>
       <Form.Item label="Локации" className="df fdc">
+        // Переделать в новый компонент List
         {locations.map(({ id, name }) => (
           <div className="df" key={id} style={{ paddingBottom: 3 }}>
             <Input onChange={handleChangeLocationName(id)} value={name} />
