@@ -24,30 +24,36 @@ import classNames from "classnames";
 
 const { Meta } = Card;
 
+// использовать эту функцию из src/utils
 const alterIsOpened = curry((property, isOpened, id, items) =>
   pipe(map(when(propEq("id", id), assoc(property, isOpened))))(items)
 );
 
+// использовать эту функцию из src/utils
 function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+// описание props
+// перенести в src/pages и переименовать в RoleManaging
 const RoleManagingView = (props) => {
-  const gameOptions = toJS(props.gameStore.options);
-  console.log(gameOptions);
-  const location = toJS(props.gameStore.location.locations)[randomIntFromInterval(0,props.gameStore.location.locations.length - 1)]
+  // деструктуризация props
+  const gameOptions = toJS(props.gameStore.options); // получаем из apollo-cache
+  console.log(gameOptions); // - удалить
+  const location = toJS(props.gameStore.location.locations)[randomIntFromInterval(0,props.gameStore.location.locations.length - 1)] // получаем из apollo-cache
 
-  console.log('location', location);
+  console.log('location', location); // - удалить
 
   const [cards, setCards] = useState(
-    arrayShuffle([
+    //  необходимо описать работу это элемента кода
+    arrayShuffle([// create function shuffle in src/utils
       ...repeat(null, gameOptions.playersCont - gameOptions.spyesCount).map(
-        () => {
+        () => { // можно избавить от return и {}
           return {
             id: uuid(),
             value: propOr("-", "name", location),
             type: "location",
-            description: pathOr(
+            description: pathOr(//  вынести проверку в функцию
               "Default description",
               ["description", "location"],
               gameOptions
@@ -59,7 +65,7 @@ const RoleManagingView = (props) => {
       ...repeat(null, gameOptions.spyesCount).map(() => ({
         id: uuid(),
         type: "spy",
-        description: pathOr(
+        description: pathOr( //  вынести проверку в функцию
           "Default description",
           ["description", "spy"],
           gameOptions
@@ -67,23 +73,24 @@ const RoleManagingView = (props) => {
         isOpened: false,
       })),
     ])
-  );
-  const history = useHistory();
+  );//нет отступа
+  const history = useHistory(); //достать только push
 
-  const handleClick = (id) => {
+  const handleClick = (id) => { // useCallback
     toggleOpened(id);
-  };
-  const removeCard = (id) => {
-    return cards.filter((card) => card.id !== id);
-  };
+  };//нет отступа
+  const removeCard = (id) => { // useCallback
+    return cards.filter((card) => card.id !== id); // переделать в  ramda filter
+  };//нет отступа
   const toggleOpened = (id) => {
     if (pipe(find(propEq("id", id)), prop("isOpened"))(cards)) {
-      return setCards(() => removeCard(id));
+      return setCards(() => removeCard(id)); // переделать removeCard и избавиться от стр функ
     }
     return setCards(() =>
+        // вынести проверку card.id === id сюда в переменную
       alterIsOpened(
         "isOpened",
-        !cards.find((card) => card.id === id).isOpened,
+        !cards.find((card) => card.id === id).isOpened, // использовать find из ramda
         id,
         cards
       )
@@ -103,17 +110,20 @@ const RoleManagingView = (props) => {
         isOpened ? "role-managing__card--opened" : "",
         "card"
       ),
-    []
+    [] // isOpened зависимость
   );
 
   return (
-    <>
+    <>// лишнее
       <div className="role-managing__card-wrapper">
+        // Использовать компонент List, в самом компоненте учесть различные сценарии передаваемых объектов,
+        // либо сделать renderItem и передавать туда JSX элемент для рендера
         {cards.map((card, index) => {
+        // сделать деструктуризацию card
           return (
             <Card
               key={card.id}
-              onClick={() => handleClick(card.id)}
+              onClick={() => handleClick(card.id)} // переделать handleСlick и избавиться от стр функц
               className={cardTheme(card.isOpened)}
               style={{ left: 3 * index, top: 3 * index }}
             >
@@ -130,7 +140,7 @@ const RoleManagingView = (props) => {
           );
         })}
       </div>
-    </>
+    </>// лишнее
   );
 };
 
